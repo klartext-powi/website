@@ -168,6 +168,87 @@ img { display: block; max-width: 100%; }
   align-items: center;
 }
 
+/* ─── SECTION 2: ÜBER MICH ──────────────────────────────── */
+.section-ueber {
+  padding: clamp(64px, 9vw, 100px) 0;
+  border-top: 1px solid var(--linie);
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 4vw, 30px);
+  letter-spacing: -.01em;
+  margin-bottom: 36px;
+}
+
+.ueber-layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .ueber-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.ueber-story p {
+  font-size: 18px;
+  line-height: 1.65;
+  margin-bottom: 20px;
+  max-width: 58ch;
+}
+.ueber-story p:last-child { margin-bottom: 0; }
+
+.ueber-honest {
+  color: var(--nebel);
+  font-size: 16px !important;
+  border-left: 2px solid var(--linie);
+  padding-left: 14px;
+  margin-top: 28px !important;
+}
+
+.ueber-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fact-card {
+  background: var(--card);
+  border: 1px solid var(--linie);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fact-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--petrol);
+}
+
+.fact-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--tinte);
+}
+
+.fact-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--nebel);
+}
+
 /* ─── FOOTER ─────────────────────────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--linie);
