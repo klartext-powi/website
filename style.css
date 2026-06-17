@@ -161,9 +161,9 @@ img { display: block; max-width: 100%; }
 
 .hero-nametag {
   font-family: var(--font-display);
-  font-size: clamp(13.5px, 1.8vw, 16px);
-  font-weight: 500;
-  color: var(--nebel);
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 700;
+  color: var(--tinte);
   margin-bottom: 28px;
   letter-spacing: .005em;
 }
