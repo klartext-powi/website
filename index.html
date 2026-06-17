@@ -47,35 +47,39 @@
     <!-- SECTION 2: ÜBER MICH -->
     <section id="ueber-mich" class="section-ueber">
       <div class="container">
-        <p class="eyebrow">Über mich</p>
-        <h2 class="section-heading">Warum ich das mache</h2>
+
+        <div class="ueber-header" data-animate="fade-up">
+          <p class="eyebrow">Über mich</p>
+          <h2 class="section-heading">Warum ich das mache</h2>
+        </div>
 
         <div class="ueber-layout">
           <div class="ueber-story">
-            <p>Ich kenne das Gefühl, vor der ersten Hausarbeit zu sitzen und keine Ahnung zu haben, wo man anfangen soll. Im Bachelor war das bei mir genauso: Die Theorie schwammig, die Methoden ein Nebel, die Fragestellung ein Rätsel.</p>
-            <p>Was den Unterschied gemacht hat, war Glück. Ich hatte jemanden in meinem Umfeld, der schon ein paar Schritte weiter war – und mir die Dinge einfach in Ruhe erklärt hat. Nicht von oben herab, sondern auf Augenhöhe. Auf einmal war vieles gar nicht mehr so kompliziert.</p>
-            <p>Heute studiere ich im Master und sitze selbst an der Masterarbeit. <span class="kw">KLARTEXT PoWi</span> ist mein Versuch, genau das weiterzugeben: PoWi und Sowi verständlich machen, Schritt für Schritt, auf dich zugeschnitten.</p>
-            <p class="ueber-honest">Und ganz ehrlich: Ich verdiene mir damit auch etwas nebenbei. Aber nur, wenn du am Ende wirklich etwas mitnimmst.</p>
+            <p data-animate="fade-up" data-delay="0">Ich kenne das Gefühl, vor der ersten Hausarbeit zu sitzen und keine Ahnung zu haben, wo man anfangen soll. Im Bachelor war das bei mir genauso: die Theorie schwammig, die Methoden ein Nebel, die Fragestellung ein Rätsel.</p>
+            <p data-animate="fade-up" data-delay="80">Was den Unterschied gemacht hat, war Glück. Ich hatte jemanden in meinem Umfeld, der schon ein paar Schritte weiter war – und mir die Dinge einfach in Ruhe erklärt hat. Nicht von oben herab, sondern auf Augenhöhe. Auf einmal war vieles gar nicht mehr so kompliziert.</p>
+            <p data-animate="fade-up" data-delay="160">Heute studiere ich im Master und sitze selbst an der Masterarbeit. <span class="kw">KLARTEXT PoWi</span> ist mein Versuch, genau das weiterzugeben: PoWi und Sowi verständlich machen, Schritt für Schritt, auf dich zugeschnitten.</p>
+            <blockquote class="ueber-honest" data-animate="fade-up" data-delay="240">Und ganz ehrlich: Ich verdiene mir damit auch etwas nebenbei. Aber nur, wenn du am Ende wirklich etwas mitnimmst.</blockquote>
           </div>
 
           <aside class="ueber-facts">
-            <div class="fact-card">
+            <div class="fact-card" data-animate="fade-up" data-delay="100">
               <span class="fact-label">Abschluss</span>
               <span class="fact-value">Bachelor PoWi</span>
-              <span class="fact-meta">Note 1,8</span>
+              <span class="fact-score">1,8</span>
             </div>
-            <div class="fact-card">
+            <div class="fact-card" data-animate="fade-up" data-delay="180">
               <span class="fact-label">Aktuell</span>
-              <span class="fact-value">Master · lfd.</span>
-              <span class="fact-meta">Schnitt 1,3</span>
+              <span class="fact-value">Master</span>
+              <span class="fact-score">Ø 1,3</span>
             </div>
-            <div class="fact-card">
-              <span class="fact-label">Wissen</span>
-              <span class="fact-value">6 Bücher</span>
-              <span class="fact-meta">67 Kapitel aufbereitet</span>
+            <div class="fact-card" data-animate="fade-up" data-delay="260">
+              <span class="fact-label">Aufbereitet</span>
+              <span class="fact-value">67 Kapitel</span>
+              <span class="fact-meta">aus 6 Büchern</span>
             </div>
           </aside>
         </div>
+
       </div>
     </section>
 
@@ -86,5 +90,18 @@
     <p>KLARTEXT PoWi · <a href="mailto:fidel00@gmx.de">fidel00@gmx.de</a></p>
   </footer>
 
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const delay = el.dataset.delay || 0;
+        setTimeout(() => el.classList.add('is-visible'), Number(delay));
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
