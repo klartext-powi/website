@@ -129,6 +129,22 @@ img { display: block; max-width: 100%; }
 }
 .btn-ghost:hover { border-color: var(--petrol); color: var(--petrol); }
 
+/* ─── WORDMARK SIGNATURE ─────────────────────────────────── */
+.wm-sig { display: inline-block; }
+.wm-sig .byline {
+  display: block;
+  text-align: right;
+  border-top: 2px solid var(--petrol);
+  margin-top: 6px;
+  padding-top: 5px;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.4vw, 14px);
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: var(--nebel);
+  line-height: 1;
+}
+
 /* ─── SECTION 1: HERO ────────────────────────────────────── */
 .section-hero {
   padding: clamp(64px, 10vw, 110px) 0 clamp(56px, 8vw, 90px);
@@ -140,10 +156,23 @@ img { display: block; max-width: 100%; }
   font-size: clamp(44px, 9vw, 76px);
   line-height: 1.02;
   letter-spacing: -.025em;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
-.section-hero .powi { color: var(--petrol); }
+.hero-nametag {
+  font-family: var(--font-display);
+  font-size: clamp(13.5px, 1.8vw, 16px);
+  font-weight: 500;
+  color: var(--nebel);
+  margin-bottom: 28px;
+  letter-spacing: .005em;
+}
+.hero-nametag strong {
+  color: var(--tinte);
+  font-weight: 700;
+  border-bottom: 2px solid var(--petrol);
+  padding-bottom: 1px;
+}
 
 .section-hero .tagline {
   font-family: var(--font-display);
