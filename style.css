@@ -106,13 +106,11 @@ img { display: block; max-width: 100%; }
 
 /* Das kleine Wordmark (anfangs versteckt) */
 .nav-wordmark {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--tinte);
-  letter-spacing: -0.02em;
-  opacity: 0; /* Unsichtbar */
-  transform: translateX(-15px); /* Leicht nach links verschoben */
+  height: 22px;
+  width: auto;
+  display: block;
+  opacity: 0;
+  transform: translateX(-15px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
 }
