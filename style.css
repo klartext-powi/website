@@ -13,7 +13,7 @@
   --font-body:    "Newsreader", Georgia, serif;
   --font-mono:    "Space Mono", monospace;
 
-  --container: 860px;
+  --container: 1400px;
 }
 
 /* ─── RESET ──────────────────────────────────────────────── */
@@ -23,7 +23,7 @@ body {
   background: var(--papier);
   color: var(--tinte);
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -53,54 +53,93 @@ img { display: block; max-width: 100%; }
 
 .colon { color: var(--petrol); }
 
-/* ─── NAV ────────────────────────────────────────────────── */
-.site-nav {
-  position: sticky;
+/* ─── HEADER / NAVBAR ────────────────────────────────────── */
+.site-header {
+  position: sticky; /* Klebt immer oben */
   top: 0;
-  z-index: 100;
-  background: rgba(244,242,236,.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--linie);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(18px, 5vw, 32px);
-  height: 54px;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 24px 0;
+  /* NEU: Hintergrund und Blur sind immer aktiv */
+  background: rgba(244, 242, 236, 0.85); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent; /* Linie anfangs unsichtbar */
+  transition: padding 0.3s ease, border-color 0.3s ease;
 }
 
-.nav-mark {
+/* Beim Scrollen wird sie nur noch schmaler und bekommt die Trennlinie */
+.site-header.is-scrolled {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(217, 211, 198, 0.6); 
+}
+
+.nav-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Das dauerhafte Favicon */
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+/* Das kleine Wordmark (anfangs versteckt) */
+.nav-wordmark {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
-  letter-spacing: -.02em;
-  line-height: 1;
+  color: var(--tinte);
+  letter-spacing: -0.02em;
+  opacity: 0; /* Unsichtbar */
+  transform: translateX(-15px); /* Leicht nach links verschoben */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
 }
 
-.site-nav nav {
+/* Sobald gescrollt wird, wird es sichtbar */
+.site-header.is-scrolled .nav-wordmark {
+  opacity: 1;
+  transform: translateX(0); /* Rutscht an seinen Platz */
+  pointer-events: auto;
+}
+
+/* Die Links rechts */
+.site-nav {
   display: flex;
-  align-items: center;
-  gap: clamp(16px, 3vw, 32px);
+  gap: 32px;
 }
 
-.site-nav nav a {
-  font-family: var(--font-display);
+.site-nav a {
+  font-family: var(--font-mono);
   font-size: 14px;
-  font-weight: 500;
-  color: var(--nebel);
-  transition: color .15s;
+  color: var(--tinte);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
 }
-.site-nav nav a:hover { color: var(--tinte); }
 
-.nav-cta {
-  color: var(--papier) !important;
-  background: var(--petrol);
-  padding: 7px 16px;
-  border-radius: 5px;
-  font-size: 13.5px !important;
-  transition: opacity .15s !important;
+.site-nav a:hover {
+  color: var(--petrol);
 }
-.nav-cta:hover { opacity: .85; }
+
+@media (max-width: 600px) {
+  .site-nav { gap: 16px; }
+  .site-nav a { font-size: 12px; }
+}
 
 /* ─── BUTTONS ────────────────────────────────────────────── */
 .btn-primary {
@@ -147,13 +186,13 @@ img { display: block; max-width: 100%; }
 
 /* ─── SECTION 1: HERO ────────────────────────────────────── */
 .section-hero {
-  padding: clamp(64px, 10vw, 110px) 0 clamp(56px, 8vw, 90px);
+  padding: clamp(64px, 10vw, 160px) 0 clamp(56px, 8vw, 120px);
 }
 
 .section-hero .wordmark {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(44px, 9vw, 76px);
+  font-size: clamp(44px, 9vw, 96px);
   line-height: 1.02;
   letter-spacing: -.025em;
   margin-bottom: 10px;
@@ -161,7 +200,7 @@ img { display: block; max-width: 100%; }
 
 .hero-nametag {
   font-family: var(--font-display);
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(18px, 2vw, 24px);
   font-weight: 700;
   color: var(--tinte);
   margin-bottom: 28px;
@@ -177,7 +216,7 @@ img { display: block; max-width: 100%; }
 .section-hero .tagline {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(19px, 3vw, 24px);
+  font-size: clamp(28px, 3vw, 42px);
   line-height: 1.3;
   max-width: 46ch;
   margin-bottom: 16px;
@@ -208,6 +247,28 @@ img { display: block; max-width: 100%; }
     opacity: 1;
     transform: none;
   }
+
+  /* Einfliegen von Links */
+  [data-animate="fade-left"] {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity .6s ease-out, transform .6s ease-out;
+  }
+  [data-animate="fade-left"].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Sanftes Vergrößern */
+  [data-animate="scale-up"] {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-animate="scale-up"].is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ─── SHARED SECTION HEADING ─────────────────────────────── */
@@ -222,7 +283,7 @@ img { display: block; max-width: 100%; }
 /* ─── SECTION 2: ÜBER MICH ──────────────────────────────── */
 .section-ueber {
   background: var(--sand);
-  padding: clamp(64px, 9vw, 100px) 0;
+  padding: clamp(64px, 9vw, 140px) 0;
 }
 
 .ueber-header {
@@ -239,6 +300,14 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 660px) {
   .ueber-layout { grid-template-columns: 1fr; gap: 36px; }
+}
+
+.ueber-story {
+  background: var(--papier);
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--linie);
+  box-shadow: 0 4px 24px rgba(35,42,46,.05); /* Moderner, weicher Schatten */
 }
 
 .ueber-story p {
@@ -305,6 +374,267 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--nebel);
+}
+
+
+/* ─── SECTION 3: ABLAUF ─────────────────────────────────── */
+/* ─── GEMEINSAME HEADER (Für alle neuen Sections) ─── */
+.section-header, .ansatz-header {
+  text-align: center;
+  margin-bottom: 56px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-intro {
+  font-size: 19px;
+  color: var(--nebel);
+  margin-top: -16px;
+}
+
+/* ─── SECTION: ANGEBOT ─── */
+.section-angebot {
+  padding: clamp(64px, 9vw, 140px) 0;
+}
+
+.angebot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 860px) {
+  .angebot-grid { grid-template-columns: 1fr; }
+}
+
+.angebot-card {
+  border-radius: 16px;
+  padding: 48px 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.angebot-card.highlight {
+  background: var(--papier);
+  border: 2px solid var(--petrol);
+  box-shadow: 0 12px 32px rgba(44,107,102,.1);
+}
+
+.angebot-card.muted {
+  background: var(--sand);
+  border: 1px dashed var(--linie);
+  opacity: 0.85; /* Nimmt die Karte optisch zurück */
+}
+
+.card-badge {
+  position: absolute;
+  top: -14px;
+  left: 40px;
+  background: var(--petrol);
+  color: var(--papier);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.card-badge.neutral {
+  background: var(--nebel);
+}
+
+.angebot-card h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.coming-soon-tag {
+  font-size: 14px;
+  background: var(--linie);
+  color: var(--tinte);
+  padding: 2px 8px;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 8px;
+  font-family: var(--font-mono);
+}
+
+.angebot-details {
+  font-size: 17px;
+  color: var(--nebel);
+  margin-bottom: 24px;
+}
+
+.angebot-features {
+  list-style: none;
+  margin-bottom: 32px;
+  flex-grow: 1; /* Schiebt Button/Preis nach unten */
+}
+
+.angebot-features li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.angebot-features li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--petrol);
+  font-family: var(--font-mono);
+}
+
+.pricing-box {
+  background: var(--card);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.price {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--tinte);
+}
+
+.price-sub {
+  display: block;
+  font-size: 13px;
+  color: var(--nebel);
+  margin-top: 4px;
+}
+
+.button.primary-btn {
+  display: block;
+  text-align: center;
+  background: var(--petrol);
+  color: var(--papier);
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.button.primary-btn:hover {
+  background: #1f4f4b; /* Etwas dunkleres Petrol */
+  transform: translateY(-2px);
+}
+
+.muted-note {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--nebel);
+  margin-top: auto;
+}
+
+/* ─── SECTION: PRINZIPIEN & METHODIK ─── */
+.section-prinzipien {
+  background: var(--card);
+  padding: clamp(64px, 9vw, 140px) 0;
+}
+
+.ansatz-text {
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: left;
+  background: var(--papier);
+  padding: 32px;
+  border-radius: 12px;
+  border-left: 4px solid var(--petrol);
+  margin-top: 24px;
+}
+
+.ansatz-text p { margin-bottom: 16px; }
+.ansatz-text p:last-child { margin-bottom: 0; }
+
+.prinzipien-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+@media (max-width: 900px) {
+  .prinzipien-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .prinzipien-grid { grid-template-columns: 1fr; }
+}
+
+.prinzip-card {
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.prinzip-card h4 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--tinte);
+  margin-bottom: 8px;
+}
+
+.prinzip-card p {
+  font-size: 15px;
+  color: var(--nebel);
+}
+
+/* ─── RESSOURCEN FLOW ─── */
+.ressourcen-box {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.ressourcen-box h3 {
+  font-family: var(--font-display);
+  margin-bottom: 32px;
+}
+
+.prozess-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.flow-step {
+  background: var(--sand);
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flow-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--petrol);
+  font-weight: 700;
+}
+
+.flow-text {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.flow-arrow {
+  color: var(--linie);
+  font-family: var(--font-mono);
 }
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
