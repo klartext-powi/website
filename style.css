@@ -20,7 +20,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--papier);
+  background-color: var(--papier);
+  /* NEU: Fließende, abstrakte Petrol-Kurven als fixierter Hintergrund. 
+     Dies nutzt ein Inline-SVG, das direkt vom Browser generiert wird (keine extra Ladezeit!) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%232c6b66'%3E%3Cpath d='M-200,400 C200,200 500,800 1000,500 C1500,200 1600,400 1800,300' stroke-width='1.2' opacity='0.07'/%3E%3Cpath d='M-200,600 C300,900 700,100 1200,400 C1700,700 1700,300 1900,500' stroke-width='1.8' opacity='0.04'/%3E%3Cpath d='M-100,100 C400,-100 900,900 1300,200 C1700,-500 1700,300 1800,100' stroke-width='0.6' opacity='0.09'/%3E%3Cpath d='M-200,800 C250,1000 600,400 1000,700 C1400,1000 1550,600 1800,800' stroke-width='0.8' opacity='0.05'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed; /* Linien bleiben beim Scrollen stehen */
+  background-size: cover;
+  background-position: center;
+  
   color: var(--tinte);
   font-family: var(--font-body);
   font-size: 20px;
@@ -168,64 +175,76 @@ img { display: block; max-width: 100%; }
 }
 .btn-ghost:hover { border-color: var(--petrol); color: var(--petrol); }
 
-/* ─── WORDMARK SIGNATURE ─────────────────────────────────── */
-.wm-sig { display: inline-block; }
-.wm-sig .byline {
-  display: block;
-  text-align: right;
-  border-top: 2px solid var(--petrol);
-  margin-top: 6px;
-  padding-top: 5px;
-  font-family: var(--font-mono);
-  font-size: clamp(11px, 1.4vw, 14px);
-  font-weight: 400;
-  letter-spacing: .08em;
-  color: var(--nebel);
-  line-height: 1;
-}
 
 /* ─── SECTION 1: HERO ────────────────────────────────────── */
 .section-hero {
-  padding: clamp(64px, 10vw, 160px) 0 clamp(56px, 8vw, 120px);
+  /* Kompakter Abstand nach oben und unten */
+  padding: clamp(32px, 6vw, 60px) 0 clamp(48px, 8vw, 80px);
+  position: relative;
+
 }
 
-/* ─── WORDMARK SIGNATURE (Repariert nach Vorlage) ─── */
+/* ─── WORDMARK SVG ───────────────────────────────────────── */
 .section-hero .wordmark {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(44px, 9vw, 96px);
-  line-height: 1; /* Kompakt für den Block */
-  letter-spacing: -.025em;
   margin-bottom: 10px;
-  display: inline-block;
-}
-
-.wm-sig { 
-  display: block; 
-}
-
-/* Der hellere Block-Hintergrund */
-.section-hero .wordmark .kw {
   display: block;
-  background: var(--petrol-hl); /* Der helle Block */
-  padding: 0.1em 0.2em;
-  color: var(--tinte);
+}
+
+.section-hero .wordmark-svg {
+  width: 100%;
+  max-width: clamp(280px, 50vw, 550px);
+  height: auto;
+  display: block;
   
-  /* Hier bauen wir den dunklen Strich INSIDE ein */
-  border-bottom: 3px solid var(--petrol); 
+  /* Textmarkierung und Drag & Drop komplett deaktiviert */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: auto;
+  
+  /* Flüssiger Übergang für den minimalen Hover */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: left center;
 }
 
-/* Dein Name rechtsbündig darunter */
-.section-hero .wordmark .byline {
-  display: block;
-  text-align: right;
-  margin-top: 8px; /* Abstand zum Block darüber */
-  font-family: var(--font-mono);
-  font-size: clamp(14px, 1.8vw, 20px); /* Etwas größer für bessere Lesbarkeit */
-  font-weight: 400;
-  letter-spacing: .08em;
-  color: var(--nebel);
-  line-height: 1;
+/* Minimales, edles "Anheben & Neigen" beim Hovern – komplett klar ohne Filter */
+.section-hero .wordmark-svg:hover {
+  transform: scale(1.015) rotate(-0.3deg);
+  cursor: default;
+}
+
+/* Hilfsklasse: Versteckt den H1-Text optisch, behält ihn aber für Google & Screenreader */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Der Hover-Effekt: Ein subtiles, leicht federndes "Anheben" und Neigen */
+.section-hero .wordmark-svg:hover {
+  transform: scale(1.02) rotate(-0.5deg);
+  filter: drop-shadow(0 6px 12px rgba(44,107,102,0.1));
+  cursor: default; /* Behält den normalen Mauszeiger */
+}
+
+/* ─── EINFLUG-ANIMATION LOGO (KORRIGIERT: OHNE BLUR) ─── */
+.hero-logo-box[data-animate="fade-up"] {
+  opacity: 0;
+  transform: translateY(22px); /* Gleicher subtiler Abstand wie der Rest */
+  filter: none !important; /* Zwingt den Browser, den Blur zu ignorieren */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.hero-logo-box[data-animate="fade-up"].is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none !important;
 }
 
 /* --- HERO LAYOUT (Split oben, Full Width unten) --- */
@@ -282,11 +301,28 @@ img { display: block; max-width: 100%; }
   border-radius: 12px;
 }
 
-/* --- TEXTBEREICH UNTEN (mit viel "Luft") --- */
+/* --- TEXTBEREICH UNTEN --- */
 .hero-content-full {
-  max-width: 860px;
-  /* Das margin-top gibt den modernen Abstand. 15vh bedeutet "15% der Bildschirmhöhe" */
-  margin-top: clamp(80px, 15vh, 160px); 
+  max-width: 1050px; /* Nutzt die volle Breite aus */
+  margin-top: clamp(32px, 6vh, 60px); /* Perfekter, engerer Abstand nach oben */
+  position: relative;
+}
+
+/* Die feine vertikale Akzentlinie links neben dem Text */
+.hero-content-full::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 6px;
+  bottom: 0;
+  width: 1px;
+  background: var(--petrol);
+  opacity: 0.3;
+}
+
+@media (max-width: 900px) {
+  .hero-content-full::before { display: none; }
+  .hero-content-full { margin-top: 40px; }
 }
 
 .kicker {
